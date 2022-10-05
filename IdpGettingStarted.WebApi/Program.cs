@@ -1,5 +1,5 @@
-using IdentityServer4.Models;
-using IdentityServer4.Test;
+using IdentityServer.WebApi;
+using Resources = IdentityServer.WebApi.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,11 +8,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddIdentityServer()
-    .AddInMemoryClients(new List<Client>())
-    .AddInMemoryIdentityResources(new List<IdentityResource>())
-    .AddInMemoryApiResources(new List<ApiResource>())
-    .AddInMemoryApiScopes(new List<ApiScope>())
-    .AddTestUsers(new List<TestUser>())
+    .AddInMemoryClients(Clients.Get())
+    .AddInMemoryIdentityResources(Resources.GetIdentityResources())
+    .AddInMemoryApiResources(Resources.GetApiResources())
+    .AddInMemoryApiScopes(Resources.GetApiScopes())
+    .AddTestUsers(Users.Get())
     .AddDeveloperSigningCredential();
 
 var app = builder.Build();
