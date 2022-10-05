@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllersWithViews();
+
 builder.Services.AddIdentityServer()
     .AddInMemoryClients(Clients.Get())
     .AddInMemoryIdentityResources(Resources.GetIdentityResources())
@@ -22,6 +24,14 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+
+app.UseStaticFiles();
+app.UseRouting();
+
+app.UseAuthorization();
+
 app.UseIdentityServer();
+
+app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
 
 app.Run();
